@@ -6,9 +6,6 @@ const {
   validateLoginUser,
 } = require("../models/User.js");
 const createError = require("http-errors");
-const VerificationToken = require("../models/VerificationToken.js");
-const crypto = require("crypto");
-const sendEmail = require("../utils/sendEmail.js");
 
 /**----------------------------------
  * @desc   Register New User
