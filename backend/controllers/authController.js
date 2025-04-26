@@ -5,7 +5,9 @@ const {
   validateRegisteUser,
   validateLoginUser,
 } = require("../models/User.js");
-const createError = require("http-errors");
+const crypto = require("crypto");
+const VerificationToken = require("../models/VerificationToken.js");
+const sendEmail = require("../utils/sendEmail.js");
 
 /**----------------------------------
  * @desc   Register New User
@@ -35,9 +37,29 @@ module.exports.registerUserCtrl = asyncHandler(async (req, res) => {
 
   await user.save();
 
-  // @TODO - sending email(verify account);
+  // Creating new VerificationToken & send it to Db
+  const verificationToken = new VerificationToken({
+    userId: user._id,
+    token: crypto.randomBytes(32).toString("hex")
+  })
 
-  res.status(201).json(user);
+  await verificationToken.save();
+
+  // Making the link
+  const link = `${process.env.CLIENT_DOMAIN}/users/${user._id}/verify/${verificationToken.token}`;
+
+  // Putting the link itno an html template
+  const htmlTemplate = `
+    <div>
+      <p>Click on the link bellow to verify your email</p>
+      <a href="${link}">Verify</a>
+    </div>`;
+  
+  // Sending email to the user
+  await sendEmail(user.email, "Verify Your Email", htmlTemplate);
+  
+  // Response
+  res.status(201).json({ message: "We sent a verification link to your email, please verify your email address" });
 });
 
 /**----------------------------------
@@ -65,7 +87,34 @@ module.exports.loginUserCtrl = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Invalid email or password" });
   }
 
-  // @TODO - sending email(verify account if not verified);
+  // sending email(verify account if not verified);
+  if(!user.isAccountVerified){
+
+    let verificationToken = await VerificationToken.findOne({
+      userId: user._id,
+    });
+    
+    if(!verificationToken) {
+      verificationToken = new VerificationToken({
+        userId: user._id,
+        token: crypto.randomBytes(32).toString("hex")
+      })
+    
+      await verificationToken.save();
+    }
+
+    const link = `${process.env.CLIENT_DOMAIN}/users/${user._id}/verify/${verificationToken.token}`;
+
+    const htmlTemplate = `
+      <div>
+        <p>Click on the link bellow to verify your email</p>
+        <a href="${link}">Verify</a>
+      </div>`;
+  
+    await sendEmail(user.email, "Verify Your Email", htmlTemplate);
+
+    return res.status(400).json({ message: "We sent a verification link to your email, please verify your email address" });
+  };
 
   const token = user.generateAuthToken();
 
@@ -98,22 +147,29 @@ module.exports.logoutUserCtrl = asyncHandler(async (req, res) => {
 });
 
 /**----------------------------------
- * @desc   Get Current Logged-in User
- * @route  /api/auth/me
- * @method GET
- * @access private (only user himself)
+ * @desc   Verify User Account
+ * @route  /api/auth/:userId/verify/:token
+ * @method Get
+ * @access public
 -------------------------------------*/
-module.exports.getMe = async (req, res, next) => {
-  try {
-    const me = req.user;
-    if (!me) {
-      return next(createError(401, "Please login first"));
-    }
-    return res.status(200).json({
-      status: true,
-      result: me,
-    });
-  } catch (error) {
-    next(createError(500, error.message));
+module.exports.verifyUserAccountCtrl = asyncHandler(async(req, res) => {
+  const user = await User.findById(req.params.userId);
+  if(!user) {
+    return res.status(400).json({ message: "Invalid link" });
   }
-};
+
+  const verificationToken = await VerificationToken.findOne({
+    userId: user._id,
+    token: req.params.token
+  });
+  if(!verificationToken) {
+    return res.status(400).json({ message: "Invalid link" });
+  }
+
+  user.isAccountVerified = true;
+  await user.save();
+
+  await verificationToken.remove();
+
+  res.status(200).json({ message: "Your account has been verified" });
+});

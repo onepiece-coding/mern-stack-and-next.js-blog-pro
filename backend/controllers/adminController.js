@@ -9,20 +9,16 @@ const { Comment } = require("../models/Comment");
  * @method GET
  * @access private (only admin)
 ---------------------------------------*/
-module.exports.getAllInfo = async (req, res, next) => {
-  try {
-    const users = await User.find({});
-    const posts = await Post.find({});
-    const categories = await Category.find({});
-    const comments = await Comment.find({});
+module.exports.getAllInfo = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+  const posts = await Post.find({});
+  const categories = await Category.find({});
+  const comments = await Comment.find({});
 
-    res.status(200).json({
-      users: users?.length || 0,
-      posts: posts?.length || 0,
-      categories: categories?.length || 0,
-      comments: comments?.length || 0,
-    });
-  } catch (error) {
-    next(createError(500, error.message));
-  }
-};
+  res.status(200).json({
+    users: users?.length || 0,
+    posts: posts?.length || 0,
+    categories: categories?.length || 0,
+    comments: comments?.length || 0,
+  });
+});

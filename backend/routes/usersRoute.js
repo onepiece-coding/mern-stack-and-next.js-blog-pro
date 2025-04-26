@@ -25,6 +25,9 @@ router.route("/profile/:id")
       .put(validateObjectId, verifyTokenAndOnlyUser, updateUserProfileCtrl)
       .delete(validateObjectId, verifyTokenAndAuthorization, deleteUserProfileCtrl);
 
+// /api/users/profile/me
+router.get("/me", verifyTokenAndOnlyUser, getMe);
+
 // /api/users/profile/profile-photo-upload
 router.route("/profile/profile-photo-upload")
       .post(verifyToken, photoUpload.single("image"), profilePhotoUploadCtrl);

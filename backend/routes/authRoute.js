@@ -3,9 +3,9 @@ const {
   registerUserCtrl,
   loginUserCtrl,
   logoutUserCtrl,
-  getMe,
+  verifyUserAccountCtrl,
 } = require("../controllers/authController.js");
-const { verifyToken } = require("../middlewares/verifyToken.js");
+const { verifyTokenAndOnlyUser } = require("../middlewares/verifyToken.js");
 
 // /api/auth/register
 router.post("/register", registerUserCtrl);
@@ -13,10 +13,11 @@ router.post("/register", registerUserCtrl);
 // /api/auth/login
 router.post("/login", loginUserCtrl);
 
-// /api/auth/me
-router.get("/me", verifyToken, getMe);
-
 // /api/auth/logout
-router.post("/logout", logoutUserCtrl);
+router.post("/logout", verifyTokenAndOnlyUser, logoutUserCtrl);
+
+// /api/auth/:userId/verify/:token
+router.post("/:userId/verify/:token", verifyUserAccountCtrl);
+
 
 module.exports = router;

@@ -35,6 +35,23 @@ module.exports.getUserProfileCtrl = asyncHandler(async(req, res) => {
   res.status(200).json(user);
 });
 
+/**----------------------------------
+ * @desc   Get Current Logged-in User
+ * @route  /api/users/profile/me
+ * @method GET
+ * @access private (only user himself)
+-------------------------------------*/
+module.exports.getMe = asyncHandler(async (req, res) => {
+  const me = req.user;
+    if (!me) {
+      return res.status(401).json({ message: "Please login first!" })
+    }
+    return res.status(200).json({
+      status: true,
+      result: me,
+    });
+});
+
 /**------------------------------------
  * @desc   Update User Profile
  * @route  /api/users/profile/:id
