@@ -95,6 +95,8 @@ The frontend will be running at http://localhost:3000
 
 The backend will be running at http://localhost:5000
 
+---
+
 ## ✨ Features
 
 - User Registration and Login (JWT)
@@ -121,11 +123,15 @@ The backend will be running at http://localhost:5000
 
 - Password Reset Functionality
 
+---
+
 ## 📋 Future Improvements
 
 - Add Multi-language (i18n) support
 
 - Implement Soft Delete for Posts
+
+---
 
 ## 🤝 Contributing
 
