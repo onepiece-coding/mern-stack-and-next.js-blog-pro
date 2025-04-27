@@ -30,7 +30,7 @@ It supports features like authentication, post management, admin dashboard, cate
   cd mern-stack-and-next.js-blog-pro
 ```
 
-2. Install Dependencies
+### 2. Install Dependencies
    
 Backend
 
@@ -46,7 +46,7 @@ Frontend
   npm install
 ```
 
-3. Environment Variables Setup
+### 3. Environment Variables Setup
    
 Create a .env file in both the backend and frontend folders.
 
@@ -75,7 +75,7 @@ Frontend .env
   NODE_ENV=development
 ````
 
-4. Running the Application
+### 4. Running the Application
 
 Start Backend Server
 
@@ -95,7 +95,7 @@ The frontend will be running at http://localhost:3000
 
 The backend will be running at http://localhost:5000
 
-✨ Features
+## ✨ Features
 
 - User Registration and Login (JWT)
 
@@ -121,20 +121,19 @@ The backend will be running at http://localhost:5000
 
 - Password Reset Functionality
 
-📋 Future Improvements
+## 📋 Future Improvements
 
 - Add Multi-language (i18n) support
 
 - Implement Soft Delete for Posts
 
-🤝 Contributing
+## 🤝 Contributing
 
 Contributions are welcome!
 
 Feel free to fork the repository and open a pull request.
 
-
-🔗 Connect With Me
+## 🔗 Connect With Me
 
 GitHub: https://github.com/onepiece-coding
 
