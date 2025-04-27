@@ -23,13 +23,14 @@ const useLoginForm = () => {
 
   // To ensure that router.push("/") is not called before state.userInfo is fully updated.
   useEffect(() => {
+    console.log("state: ", state);
     if (state.userInfo) {
       localStorage.setItem("userInfo", JSON.stringify(state.userInfo));
       setUserInfo(state.userInfo);
       toast.success("You have logged in successfully");
       router.replace(`/`);
     }
-  }, [router, state.userInfo, setUserInfo]);
+  }, [state.userInfo]);
 
   return { formAction, state };
 };

@@ -1,4 +1,4 @@
-import { VerifyUserAccount } from "@/lib/api/auth.calls";
+import { verifyUserAccount } from "@/lib/api/auth.calls";
 import { BsPatchCheck, BsPatchExclamation } from "react-icons/bs";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -23,12 +23,14 @@ interface VerifyEmailProps {
 const VerifyEmail = async ({ params }: VerifyEmailProps) => {
   const { userId, token } = await params;
 
-  const { status, message } = await VerifyUserAccount(userId, token);
+  console.log(userId, token);
+
+  const { success, message } = await verifyUserAccount(userId, token);
 
   return (
     <section className="min-h-[calc(100vh-62px)] container mx-auto p-6 flex justify-center items-center">
       <div className="text-center">
-        {status ? (
+        {success ? (
           <>
             <div className="mb-4 flex justify-center">
               <BsPatchCheck className="w-24 h-24 text-green-600 dark:text-green-500" />

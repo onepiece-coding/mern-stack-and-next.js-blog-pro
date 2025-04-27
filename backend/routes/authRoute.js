@@ -17,7 +17,6 @@ router.post("/login", loginUserCtrl);
 router.post("/logout", verifyTokenAndOnlyUser, logoutUserCtrl);
 
 // /api/auth/:userId/verify/:token
-router.post("/:userId/verify/:token", verifyUserAccountCtrl);
-
+router.get("/:userId/verify/:token", verifyUserAccountCtrl);
 
 module.exports = router;

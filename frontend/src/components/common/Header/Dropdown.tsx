@@ -11,7 +11,7 @@ const Dropdown = ({ userInfo }: { userInfo: TUser | null }) => {
       label={
         <Avatar
           alt={userInfo?.username}
-          img={userInfo?.profilePhoto.url}
+          img={userInfo?.profilePhoto?.url}
           rounded
         />
       }

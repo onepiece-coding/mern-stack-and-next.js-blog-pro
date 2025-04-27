@@ -9,6 +9,8 @@ import Submit from "../Submit";
 const LoginForm = () => {
   const { formAction, state } = useLoginForm();
 
+  console.log(state);
+
   return (
     <form
       className="flex w-full sm:w-[512px] flex-col gap-4"

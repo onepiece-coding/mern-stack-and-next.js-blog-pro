@@ -21,7 +21,7 @@ export default async function RootLayout({
       <body
         className={`${inter.className} bg-white text-gray-600 antialiased dark:bg-gray-900 dark:text-gray-400`}
       >
-        <AuthContextProvider>
+        <AuthContextProvider token={token}>
           <Flowbite>
             <Header token={token} />
             <ToastContainer

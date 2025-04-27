@@ -16,7 +16,7 @@ export async function getUserProfile(userId: string): Promise<TUser> {
 export async function getMe(
   token: string
 ): Promise<{ result: { isAdmin: boolean; id: string } }> {
-  const response = await fetch(`${API_BASE_URL}/api/auth/me`, {
+  const response = await fetch(`${API_BASE_URL}/api/users/me`, {
     headers: {
       authorization: token ? `Bearer ${token}` : "",
     },

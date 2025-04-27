@@ -2,6 +2,7 @@ const { Post } = require("../models/Post");
 const { User } = require("../models/User");
 const { Category } = require("../models/Category");
 const { Comment } = require("../models/Comment");
+const asyncHandler = require("express-async-handler");
 
 /**------------------------------------
  * @desc   Get All Info
