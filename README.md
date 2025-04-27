@@ -141,8 +141,8 @@ Feel free to fork the repository and open a pull request.
 
 ## 🔗 Connect With Me
 
-GitHub: https://github.com/onepiece-coding
+github: [open it](https://github.com/onepiece-coding)
 
-LinkedIn: https://www.linkedin.com/in/lahcen-alhiane-0799ba303/
+LinkedIn: [open it](https://www.linkedin.com/in/lahcen-alhiane-0799ba303/)
 
 🚀 Happy Blogging!
