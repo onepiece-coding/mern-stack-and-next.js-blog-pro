@@ -4,22 +4,31 @@ import { useDashboardContext } from "@/contexts/DashboardContextProvider";
 import { TPost } from "@/types";
 import { TableCell, TableRow } from "flowbite-react";
 import Link from "next/link";
-import { memo } from "react";
+import { memo, useMemo } from "react";
 
 interface PostItemProps {
   post: TPost;
   index: number;
   token: string;
+  pageNumber: number;
 }
 
 const PostItem = memo(
-  ({ post, index, token }: PostItemProps) => {
+  ({ post, index, token, pageNumber: currentPage }: PostItemProps) => {
     const { setDashboardState } = useDashboardContext();
+
+    const id = useMemo(
+      () =>
+        4 * (currentPage - 1) + (index + 1) < 10
+          ? `0${4 * (currentPage - 1) + (index + 1)}`
+          : 4 * (currentPage - 1) + (index + 1),
+      [currentPage, index]
+    );
 
     return (
       <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
         <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-          {index < 9 ? `0${index + 1}` : index + 1}
+          {id}
         </TableCell>
         <TableCell className="whitespace-nowrap">
           {post?.user.username}

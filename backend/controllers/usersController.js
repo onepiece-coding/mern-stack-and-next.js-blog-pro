@@ -47,7 +47,7 @@ module.exports.getUserProfileCtrl = asyncHandler(async (req, res) => {
  * @access private (only user himself)
 -------------------------------------*/
 module.exports.getMe = asyncHandler(async (req, res) => {
-  const me = req.user;
+  const me = await User.findById(req.user.id);
   if (!me) {
     return res.status(401).json({ message: "Please login first!" });
   }

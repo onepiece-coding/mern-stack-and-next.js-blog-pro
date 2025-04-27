@@ -15,11 +15,19 @@ export const metadata: Metadata = {
   },
 };
 
-const ManagePostsPage = async () => {
+const ManagePostsPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ pageNumber: string }>;
+}) => {
   // await new Promise((resolver) => setTimeout(resolver, 10000));
 
+  const { pageNumber = "1" } = await searchParams;
+
   const [data, token] = await Promise.all([
-    dataFetching<{ posts: TPost[]; totalPages: number }>("/api/posts"),
+    dataFetching<{ posts: TPost[]; totalPages: number }>(
+      `/api/posts?pageNumber=${pageNumber}`
+    ),
     getAuthToken(),
   ]);
 
@@ -41,7 +49,11 @@ const ManagePostsPage = async () => {
                 Actions
               </TableHeadCell>
             </TableHead>
-            <PostsList postsList={data.posts} token={token} />
+            <PostsList
+              postsList={data.posts}
+              token={token}
+              pageNumber={+pageNumber}
+            />
           </Table>
         </div>
       ) : (

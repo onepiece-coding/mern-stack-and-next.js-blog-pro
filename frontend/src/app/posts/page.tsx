@@ -58,12 +58,12 @@ const PostsPage = async ({ searchParams }: PostsPageProps) => {
 
   return (
     <section className="container mx-auto p-6">
+      <div className="flex max-md:flex-col justify-between items-center mb-6 max-md:gap-6">
+        <SearchBar />
+        <SelectBar categories={categories} />
+      </div>
       {postsData.posts.length > 0 ? (
         <>
-          <div className="flex max-md:flex-col justify-between items-center mb-6 max-md:gap-6">
-            <SearchBar />
-            <SelectBar categories={categories} />
-          </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {postsData.posts.map((post, index) => (
               <PostCard key={post._id} {...post} index={index} />

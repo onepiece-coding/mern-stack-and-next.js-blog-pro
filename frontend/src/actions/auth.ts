@@ -17,7 +17,7 @@ type Errors = {
 };
 
 type LoginStatus = {
-  userInfo?: TUser;
+  userInfo?: TUser | null;
   errors?: Errors;
   formData?: TLoginFormInputs;
 };
@@ -91,6 +91,7 @@ export async function loginUser(
     // return userInfo
     return {
       userInfo: response.data.user,
+      errors: {},
     };
   } catch (error) {
     console.log("Login Error: ", error);

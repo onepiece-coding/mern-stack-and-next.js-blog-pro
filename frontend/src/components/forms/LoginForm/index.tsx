@@ -9,7 +9,7 @@ import Submit from "../Submit";
 const LoginForm = () => {
   const { formAction, state } = useLoginForm();
 
-  console.log(state);
+  console.log("LoginForm: ", state);
 
   return (
     <form

@@ -50,7 +50,7 @@ const HomePage = async ({ searchParams }: HomePageProps) => {
     <section className="container mx-auto p-6">
       <div className="flex max-md:flex-col justify-between items-center mb-6 max-md:gap-6">
         <Heading />
-        {postsData.posts.length > 0 && <SelectBar categories={categories} />}
+        <SelectBar categories={categories} />
       </div>
       {postsData.posts.length > 0 ? (
         <>
