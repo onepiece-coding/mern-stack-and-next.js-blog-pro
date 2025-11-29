@@ -1,11 +1,70 @@
-How to use in a route/controller
+# OP-Blog — Backend
 
-import { singleImage } from '../middleware/photoUpload.js';
+[![Node](https://img.shields.io/badge/node-18%2B-%2343853d)]()
+[![TypeScript](https://img.shields.io/badge/typescript-5.9-blue.svg)]()
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)]()
 
-// In your route:
-router.post('/upload', singleImage('image'), async (req, res, next) => {
-  // req.file is typed by multer (but Express types are permissive)
-  const file = req.file;
-  if (!file) return res.status(400).json({ message: 'No image provided' });
-  // pass file.buffer to cloudinary uploader helper (below)
-});
+## One-line
+A production-minded Express + TypeScript REST API for a blogging platform (users, posts, comments, categories, image uploads). Built with ESM, typed environment validation, Zod validation, and tests (Jest + mongodb-memory-server).
+
+---
+
+## Contents
+- Features
+- Tech stack
+- Prerequisites
+- Quick start
+- Environment variables
+- Scripts
+- API examples
+- Testing
+- Deployment notes
+- Project structure
+- Contributing
+- License
+- Contact
+
+---
+
+## Features
+- User authentication (JWT) — register, login, protected endpoints
+- Posts, comments, categories CRUD  
+- Image upload integration with Cloudinary (memory upload + streaming) 
+- Input validation with Zod  
+- TypeScript + ESM (Node `nodenext`)  
+- Unit + integration tests (Jest + mongodb-memory-server)  
+- Graceful shutdown, error handling, typed environment validation
+
+---
+
+## Tech stack
+- Node.js 18+ (ESM)
+- TypeScript
+- Express
+- MongoDB (Mongoose)
+- Cloudinary (media)
+- Zod (validation)
+- Jest (tests) + mongodb-memory-server for integration tests
+- ESLint + Prettier
+
+---
+
+## Quick start (development)
+
+### Prerequisites
+- Node 18+ installed
+- MongoDB for local dev (or skip if you use in-memory DB for tests)
+- Cloudinary account (for image uploads) — optional for local dev
+
+### Install
+git clone git@github.com:onepiece-coding/mern-stack-and-next.js-blog-pro.git
+cd backend
+npm install
+npm run dev
+
+---
+
+## Contact
+
+Email: mohamed.bouderya@gmail.com
+Project: https://github.com/onepiece-coding/mern-stack-and-next.js-blog-pro

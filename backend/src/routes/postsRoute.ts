@@ -8,7 +8,7 @@ import { createPostCtrl,
       updatePostImageCtrl,
       toggleLikeCtrl
 } from "../controllers/postsController.js";
-import { photoUpload } from "../middlewares/photoUpload.js";
+import { singleImage } from "../middlewares/photoUpload.js";
 import { verifyToken } from "../middlewares/verifyToken.js";
 import validateObjectIdParam from "../middlewares/validateObjectId.js";
 import { validate } from '../middlewares/validate.js';
@@ -18,7 +18,7 @@ const postsRoutes = Router();
 
 // /api/posts
 postsRoutes.route("/")
-      .post(verifyToken, photoUpload.single("image"), validate(validateCreatePost), createPostCtrl)
+      .post(verifyToken, singleImage("image"), validate(validateCreatePost), createPostCtrl)
       .get(getAllPostsCtrl)
 
 // /api/post/count
@@ -32,7 +32,7 @@ postsRoutes.route("/:id")
       .patch(verifyToken, validate(validateUpdatePost), updatePostCtrl);
 
 // /api/post/update-image/:id
-postsRoutes.route("/update-image/:id").put(validateObjectIdParam("id"), verifyToken, photoUpload.single("image"), updatePostImageCtrl);
+postsRoutes.route("/update-image/:id").put(validateObjectIdParam("id"), verifyToken, singleImage("image"), updatePostImageCtrl);
 
 // /api/posts/like/:id
 postsRoutes.route("/like/:id").patch(validateObjectIdParam("id"), verifyToken, toggleLikeCtrl);

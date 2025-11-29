@@ -9,7 +9,7 @@ import { getAllUsersCtrl,
 } from "../controllers/usersController.js";
 import { verifyTokenAndAdmin, verifyTokenAndOnlyUser, verifyToken, verifyTokenAndAuthorization } from "../middlewares/verifyToken.js";
 import validateObjectIdParam from "../middlewares/validateObjectId.js";
-import { photoUpload } from "../middlewares/photoUpload.js";
+import { singleImage } from "../middlewares/photoUpload.js";
 import { validate } from '../middlewares/validate.js';
 import { validateUpdateUser } from '../validations/userValidations.js';
 
@@ -32,7 +32,7 @@ usersRoutes.get("/me", verifyToken, getMe);
 // /api/users/profile/profile-photo-upload
 usersRoutes
   .route("/profile/profile-photo-upload")
-  .post(verifyToken, photoUpload.single("image"), profilePhotoUploadCtrl);
+  .post(verifyToken, singleImage("image"), profilePhotoUploadCtrl);
 
 // /api/users/count
 usersRoutes.route("/count").get(verifyTokenAndAdmin, getUsersCountCtrl);
