@@ -57,10 +57,12 @@ A production-minded Express + TypeScript REST API for a blogging platform (users
 - Cloudinary account (for image uploads) — optional for local dev
 
 ### Install
+```bash
 git clone git@github.com:onepiece-coding/mern-stack-and-next.js-blog-pro.git
 cd backend
 npm install
 npm run dev
+```
 
 ---
 
