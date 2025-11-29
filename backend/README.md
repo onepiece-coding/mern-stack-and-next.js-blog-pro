@@ -9,23 +9,6 @@ A production-minded Express + TypeScript REST API for a blogging platform (users
 
 ---
 
-## Contents
-- Features
-- Tech stack
-- Prerequisites
-- Quick start
-- Environment variables
-- Scripts
-- API examples
-- Testing
-- Deployment notes
-- Project structure
-- Contributing
-- License
-- Contact
-
----
-
 ## Features
 - User authentication (JWT) — register, login, protected endpoints
 - Posts, comments, categories CRUD  
