@@ -21,6 +21,9 @@ dist-ssr/
 *.local
 .cache/
 temp/
+.postman/
+postman/environments/
+postman/globals/
 
 # Editor directories and files
 .vscode/*
@@ -45,11 +48,10 @@ Note.md
 coverage/
 .nyc_output/
 
-# Optional (personal notes)
+# Optional
 note.md
 Note.md
 
-# Optional (OS-specific)
 Thumbs.db
 ehthumbs.db
 Desktop.ini

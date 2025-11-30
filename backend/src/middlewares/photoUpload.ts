@@ -1,7 +1,11 @@
 import multer, { FileFilterCallback } from 'multer';
 import type { Request } from 'express';
 
-const imageFileFilter = (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
+const imageFileFilter = (
+  req: Request,
+  file: Express.Multer.File,
+  cb: FileFilterCallback,
+) => {
   const mimetype = file.mimetype ?? '';
   if (mimetype.startsWith('image/')) {
     cb(null, true);
@@ -16,7 +20,7 @@ const DEFAULT_LIMITS = { fileSize: 1 * 1024 * 1024 };
 export const photoUpload = multer({
   storage: multer.memoryStorage(),
   fileFilter: imageFileFilter,
-  limits: DEFAULT_LIMITS
+  limits: DEFAULT_LIMITS,
 });
 
 /**
@@ -24,12 +28,13 @@ export const photoUpload = multer({
  * - single(fieldName) -> middleware for single file
  * - multiple(fieldName, maxCount) -> middleware for multiple files
  */
-export const singleImage = (fieldName = 'image') => photoUpload.single(fieldName);
+export const singleImage = (fieldName = 'image') =>
+  photoUpload.single(fieldName);
 export const multipleImages = (fieldName = 'images', maxCount = 5) =>
   photoUpload.array(fieldName, maxCount);
 
 export default {
   photoUpload,
   singleImage,
-  multipleImages
+  multipleImages,
 };

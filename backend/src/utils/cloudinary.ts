@@ -1,4 +1,9 @@
-import { v2 as cloudinary, UploadApiResponse, UploadApiErrorResponse } from 'cloudinary';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  v2 as cloudinary,
+  UploadApiResponse,
+  UploadApiErrorResponse,
+} from 'cloudinary';
 import streamifier from 'streamifier';
 import { env } from '../env.js';
 
@@ -10,16 +15,19 @@ cloudinary.config({
 
 export const uploadBufferToCloudinary = async (
   buffer: Buffer,
-  options?: { folder?: string; public_id?: string }
+  options?: { folder?: string; public_id?: string },
 ): Promise<UploadApiResponse> => {
   return new Promise<UploadApiResponse>((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
         folder: options?.folder,
         public_id: options?.public_id,
-        resource_type: 'auto'
+        resource_type: 'auto',
       },
-      (error: UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) => {
+      (
+        error: UploadApiErrorResponse | undefined,
+        result: UploadApiResponse | undefined,
+      ) => {
         if (error) {
           return reject(error);
         }
@@ -27,7 +35,7 @@ export const uploadBufferToCloudinary = async (
           return reject(new Error('Empty response from Cloudinary'));
         }
         resolve(result);
-      }
+      },
     );
 
     streamifier.createReadStream(buffer).pipe(uploadStream);
@@ -55,5 +63,5 @@ export const removeMultipleImages = async (publicIds: string[]) => {
 export default {
   uploadBufferToCloudinary,
   removeImage,
-  removeMultipleImages
+  removeMultipleImages,
 };

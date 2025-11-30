@@ -1,4 +1,5 @@
-import { z } from "zod";
+import { z } from 'zod';
+import { sanitizeText } from '../utils/sanitize.js';
 
 export const passwordSchema = z
   .string()
@@ -9,24 +10,42 @@ export const passwordSchema = z
   .regex(/[0-9]/, 'Password must contain a number')
   .regex(/[^a-zA-Z0-9]/, 'Password must contain a special character');
 
-
 // Validate Register User
 export const validateRegisterUser = z.object({
-  username: z.string().trim().min(2, 'Username too short').max(100, 'Username too long'),
-  email: z.email('Invalid email').trim().min(5, 'Email too short').max(100, 'Email too long'),
-  password: passwordSchema, 
+  username: z.preprocess(
+    sanitizeText,
+    z
+      .string()
+      .trim()
+      .min(2, 'Username too short')
+      .max(100, 'Username too long'),
+  ),
+  email: z.preprocess(
+    sanitizeText,
+    z
+      .email('Invalid email')
+      .trim()
+      .min(5, 'Email too short')
+      .max(100, 'Email too long'),
+  ),
+  password: passwordSchema,
 });
-
 
 // Validate Login User
 export const validateLoginUser = z.object({
-  email: z.email('Invalid email').min(1, 'Email required').trim(),
+  email: z.preprocess(
+    sanitizeText,
+    z.email('Invalid email').min(1, 'Email required').trim(),
+  ),
   password: z.string().trim().min(1, 'Password required'),
 });
 
 // Validate Email
 export const validateEmail = z.object({
-  email: z.email('Invalid email').trim().min(1, 'Email required'),
+  email: z.preprocess(
+    sanitizeText,
+    z.email('Invalid email').trim().min(1, 'Email required'),
+  ),
 });
 
 // Validate New Password
@@ -36,9 +55,12 @@ export const validateNewPassword = z.object({
 
 // Validate Update User
 export const validateUpdateUser = z.object({
-  username: z.string().trim().min(2).max(100).optional(),
+  username: z.preprocess(
+    sanitizeText,
+    z.string().trim().min(2).max(100).optional(),
+  ),
   password: passwordSchema.optional(),
-  bio: z.string().optional(),
+  bio: z.preprocess(sanitizeText, z.string().optional()),
 });
 
 export type RegisterUserInput = z.infer<typeof validateRegisterUser>;

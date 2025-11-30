@@ -27,7 +27,7 @@ A production-minded Express + TypeScript REST API for a blogging platform (users
 - MongoDB (Mongoose)
 - Cloudinary (media)
 - Zod (validation)
-- Jest (tests) + mongodb-memory-server for integration tests
+- Jest (tests) + mongodb-memory-server for integration tests [Not available yet]
 - ESLint + Prettier
 
 ---
@@ -46,6 +46,8 @@ cd backend
 npm install
 npm run dev
 ```
+
+- **note:** You can Import postman folder to your local workspace to test endpoints
 
 ---
 

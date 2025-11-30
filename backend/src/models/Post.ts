@@ -1,12 +1,12 @@
-import { Schema, model, Document, Types } from "mongoose";
-import { IImage } from "./User.js";
+import { Schema, model, Document, Types } from 'mongoose';
+import { IImage } from './User.js';
 
 export interface IPost extends Document {
   title: string;
   description: string;
   user: Types.ObjectId;
-  category: string;
-  image: IImage;
+  categoryId: Schema.Types.ObjectId;
+  image: IImage | { url: string; publicId?: string | null };
   likes: Types.ObjectId[];
 }
 
@@ -28,24 +28,25 @@ const PostSchema = new Schema<IPost>(
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
-    category: {
-      type: String,
+    categoryId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
       required: true,
     },
     image: {
       type: Object,
       default: {
-        url: "",
+        url: '',
         publicId: null,
       },
     },
     likes: [
       {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: 'User',
       },
     ],
   },
@@ -53,19 +54,18 @@ const PostSchema = new Schema<IPost>(
     timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  }
+  },
 );
 
-// Create a text index for full-text search (alias)
-PostSchema.index({ title: "text", description: "text" });
+// text index for full-text search
+PostSchema.index({ title: 'text', description: 'text' });
 
 // Populate Comments For This Post
-PostSchema.virtual("comments", {
-  ref: "Comment",
-  foreignField: "postId",
-  localField: "_id",
+PostSchema.virtual('comments', {
+  ref: 'Comment',
+  foreignField: 'postId',
+  localField: '_id',
 });
 
 // Post Model
-export default model<IPost>("Post", PostSchema);
-
+export default model<IPost>('Post', PostSchema);

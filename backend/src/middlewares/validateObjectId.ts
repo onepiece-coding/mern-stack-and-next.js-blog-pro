@@ -1,27 +1,26 @@
-import type { Request, Response, NextFunction, RequestHandler } from 'express';
+import type { RequestHandler } from 'express';
 import createError from 'http-errors';
 import { z } from 'zod';
 import mongoose from 'mongoose';
 
-export const validateObjectIdParam = (paramName: string): RequestHandler => {
-  const shape: Record<string, any> = {
+const validateObjectIdParam = (paramName: string): RequestHandler => {
+  const schema = z.object({
     [paramName]: z
       .string()
+      .min(1, { message: `Invalid ${paramName}` })
       .refine((val) => mongoose.Types.ObjectId.isValid(val), {
-        message: `Invalid ${paramName}`
-      })
-  };
+        message: `Invalid ${paramName}`,
+      }),
+  } as Record<string, any>);
 
-  const schema = z.object(shape);
-
-  return (req: Request, _res: Response, next: NextFunction) => {
+  return (req, _res, next) => {
     const parsed = schema.safeParse(req.params);
     if (!parsed.success) {
-      const first = parsed.error.issues[0];
+      const firstIssue = parsed.error.issues[0];
       return next(
-        createError(400, `Invalid parameter: ${first.message}`, {
-          errors: z.treeifyError(parsed.error)
-        })
+        createError(400, `Invalid parameter: ${firstIssue.message}`, {
+          errors: z.treeifyError(parsed.error),
+        }),
       );
     }
     return next();

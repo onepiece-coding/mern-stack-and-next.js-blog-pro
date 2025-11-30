@@ -1,88 +1,95 @@
 import { Request, Response } from 'express';
-import asyncHandler from "express-async-handler";
-import createError from "http-errors";
-import Category from "../models/Category.js"
+import asyncHandler from 'express-async-handler';
+import createError from 'http-errors';
+import { z } from 'zod';
+import xss from 'xss';
+import Category from '../models/Category.js';
+
+// query schema for get all posts
+const getCategoriesQuerySchema = z.object({
+  pageNumber: z.preprocess((val) => {
+    const s = Array.isArray(val) ? val[0] : (val ?? '1');
+    const n = Number(s);
+    return Number.isFinite(n) && n >= 1 ? Math.floor(n) : 1;
+  }, z.number().int().min(1).default(1)),
+  search: z.preprocess((val) => {
+    const s = Array.isArray(val) ? val[0] : val;
+    if (typeof s !== 'string' || s.trim() === '') return '';
+    return xss(s.trim());
+  }, z.string().optional().default('')),
+});
 
 /**------------------------------------------------
  * @desc   Create New Category
- * @route  /api/categories
+ * @route  /api/v1/categories
  * @method POST
  * @access private (only admin)
 ---------------------------------------------------*/
-export const createCategoryCtrl = asyncHandler(async(req: Request, res: Response) => {
-  let cat = await Category.findOne({
-    name: { $regex: `^${req.body.title}$`, $options: 'i' },
-  });
-  if (cat) throw createError(409, 'Category already exist');
+export const createCategoryCtrl = asyncHandler(
+  async (req: Request, res: Response) => {
+    let cat = await Category.findOne({
+      name: { $regex: `^${req.body.title}$`, $options: 'i' },
+    });
+    if (cat) throw createError(409, 'Category already exist');
 
-  cat = await Category.create({
-    title: req.body.title,
-    user: req.user.id,
-  });
+    cat = await Category.create({
+      title: req.body.title,
+      user: req.user.id,
+    });
 
-  res.status(201).json(cat);
-});
+    res.status(201).json(cat);
+  },
+);
 
 /**------------------------------------------------
  * @desc   Get All Categories
- * @route  /api/categories
+ * @route  /api/v1/categories
  * @method GET
  * @access public
 ---------------------------------------------------*/
-export const getAllCategoriesCtrl = asyncHandler(async(req: Request, res: Response) => {
-  const pageFromReq = req.query.page as string | undefined;
-  const limitFromReq = req.query.limit as string | undefined;
-  const search = (req.query.search as string) ?? undefined;
+export const getAllCategoriesCtrl = asyncHandler(
+  async (req: Request, res: Response) => {
+    const parsed = getCategoriesQuerySchema.safeParse(req.query);
+    if (!parsed.success) throw createError(400, 'Invalid query parameters');
 
-  const filter: Record<string, any> = {};
-  if (search) {
-    filter.title = { $regex: search, $options: 'i' };
-  }
+    const { pageNumber, search } = parsed.data;
+    const CATEGORY_PER_PAGE = 10;
+    const skip = (pageNumber - 1) * CATEGORY_PER_PAGE;
 
-  const total = await Category.countDocuments(filter);
+    const filter: Record<string, any> = {};
+    if (search && search.length > 0) {
+      filter.title = { $regex: search, $options: 'i' };
+    }
 
-  let query = Category.find(filter).lean();
+    const total = await Category.countDocuments(filter);
 
-  let page: number | null = null;
-  let limit: number | null = null;
-  let totalPages: number | null = null;
+    const users = await Category.find(filter)
+      .skip(skip)
+      .limit(CATEGORY_PER_PAGE)
+      .sort({ createdAt: -1 });
 
-  if (pageFromReq != null && limitFromReq != null) {
-    page = parseInt(pageFromReq, 10);
-    limit = parseInt(limitFromReq, 10);
-
-    if (page < 1) page = 1;
-    if (limit < 1) limit = 10;
-
-    query = query.skip((page - 1) * limit).limit(limit);
-    totalPages = Math.ceil(total / limit);
-  }
-
-  const data = await query;
-
-  const meta: Record<string, any> = { total };
-  if (page != null && limit != null) {
-    meta.page = page;
-    meta.limit = limit;
-    meta.totalPages = totalPages;
-  }
-
-  res.status(200).json({ data, meta });
-});
+    res.status(200).json({
+      users,
+      totalPages: Math.ceil(total / CATEGORY_PER_PAGE),
+    });
+  },
+);
 
 /**------------------------------------------------
  * @desc   Delete Category
- * @route  /api/categories/:id
+ * @route  /api/v1/categories/:id
  * @method DELETE
  * @access private (only admin)
 ---------------------------------------------------*/
-export const deleteCategoryCtrl = asyncHandler(async(req: Request, res: Response) => {
-  const category = await Category.findByIdAndDelete(req.params.id);
+export const deleteCategoryCtrl = asyncHandler(
+  async (req: Request, res: Response) => {
+    const category = await Category.findByIdAndDelete(req.params.id);
 
-  if (!category) throw createError(404, 'Category not found');
+    if (!category) throw createError(404, 'Category not found');
 
-  res.status(200).json({
-    message: "category has been deleted successfully",
-    categoryId: category._id
-  });
-});
+    res.status(200).json({
+      message: 'category has been deleted successfully',
+      categoryId: category._id,
+    });
+  },
+);

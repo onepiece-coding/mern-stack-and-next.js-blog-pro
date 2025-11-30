@@ -1,5 +1,10 @@
-import nodemailer, { Transporter, SendMailOptions, SentMessageInfo } from 'nodemailer';
+import nodemailer, {
+  Transporter,
+  SendMailOptions,
+  SentMessageInfo,
+} from 'nodemailer';
 import { env } from '../env.js';
+import logger from './logger.js';
 
 type EmailPayload = {
   to: string;
@@ -23,8 +28,8 @@ async function getTransporter(): Promise<Transporter> {
         secure: testAccount.smtp.secure,
         auth: {
           user: testAccount.user,
-          pass: testAccount.pass
-        }
+          pass: testAccount.pass,
+        },
       });
       return tx;
     }
@@ -32,7 +37,7 @@ async function getTransporter(): Promise<Transporter> {
     // Fallback: username/password (APP_EMAIL_PASSWORD must be an app password for Gmail)
     if (!env.APP_EMAIL_ADDRESS || !process.env.APP_EMAIL_PASSWORD) {
       throw new Error(
-        'Email is not configured: set APP_EMAIL_ADDRESS and APP_EMAIL_PASSWORD'
+        'Email is not configured: set APP_EMAIL_ADDRESS and APP_EMAIL_PASSWORD',
       );
     }
 
@@ -40,8 +45,8 @@ async function getTransporter(): Promise<Transporter> {
       service: 'gmail',
       auth: {
         user: env.APP_EMAIL_ADDRESS,
-        pass: process.env.APP_EMAIL_PASSWORD
-      }
+        pass: process.env.APP_EMAIL_PASSWORD,
+      },
     });
     await tx.verify();
     return tx;
@@ -54,14 +59,19 @@ async function getTransporter(): Promise<Transporter> {
  * Send an email. Returns SentMessageInfo for real transports,
  * and (in test mode) returns the preview URL string so tests can assert on it.
  */
-export async function sendEmail({ to, subject, html, from }: EmailPayload): Promise<SentMessageInfo | string> {
+export async function sendEmail({
+  to,
+  subject,
+  html,
+  from,
+}: EmailPayload): Promise<SentMessageInfo | string> {
   const transporter = await getTransporter();
 
   const mailOptions: SendMailOptions = {
     from: from ?? env.APP_EMAIL_ADDRESS,
     to,
     subject,
-    html
+    html,
   };
 
   try {
@@ -74,15 +84,15 @@ export async function sendEmail({ to, subject, html, from }: EmailPayload): Prom
       return preview ?? info;
     }
 
-    console.info('Email sent:', {
+    logger.info('Email sent:', {
       messageId: info.messageId,
       accepted: info.accepted?.length ?? 0,
-      rejected: info.rejected?.length ?? 0
+      rejected: info.rejected?.length ?? 0,
     });
 
     return info;
   } catch (err) {
-    console.error('Error sending email', err);
+    logger.error('Error sending email', err);
     throw new Error('Internal Server Error (email send)');
   }
 }

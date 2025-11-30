@@ -1,0 +1,943 @@
+{
+  "info": {
+    "_postman_id": "b0eabbd3-48f5-44e0-b6b2-b2ccefcb407e",
+    "name": "OP-Blog",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "41824580"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register New User",
+          "id": "dabdabdd-be91-4d78-9884-c86279bd0acc",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"Abd\",\r\n    \"email\": \"abd@gmail.com\",\r\n    \"password\": \"Pass@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/v1/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login User",
+          "id": "82098f77-265c-4658-acaa-eb94ee9cfa9a",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQzNDY5OCwiZXhwIjoxNzY1MDM5NDk4fQ.aOA7ynSbKXqtLt7nnYRg4FvJ2tLpAgY_y486eO7wbAw",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"mohamed@gmail.com\",\r\n    \"password\": \"Pass@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/auth/login",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout User",
+          "id": "775631e4-71ec-4364-a918-a0e58ff08e01",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQzNTE3NSwiZXhwIjoxNzY1MDM5OTc1fQ.yjp6wrb1-9QlYa_1H2_ymqDa_Ked05ZN-egzd4Nh63A",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/auth/logout/692b220a349a8ae90fe67836",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "logout",
+                "692b220a349a8ae90fe67836"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "b3ae0002-ccb3-4e20-9416-74057616372a"
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users Profile",
+          "id": "0e8c3009-2862-465d-8979-7007cf476796",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQzNTcyMSwiZXhwIjoxNzY1MDQwNTIxfQ.ogTostxC2r_1n6bTkwxTSmmBDk6D0aqrp_38gLVduUY",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/users/profile",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "profile"
+              ]
+            },
+            "description": "only admin can get all users"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Me",
+          "id": "9e63c93c-ea7a-4b83-8492-d8d0d2329fa4",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQzNTcyMSwiZXhwIjoxNzY1MDQwNTIxfQ.ogTostxC2r_1n6bTkwxTSmmBDk6D0aqrp_38gLVduUY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/users/me",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "id": "2c14fb26-3020-41b5-814d-241efc8dbec7",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQzNTcyMSwiZXhwIjoxNzY1MDQwNTIxfQ.ogTostxC2r_1n6bTkwxTSmmBDk6D0aqrp_38gLVduUY",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"Medo\",\r\n    \"bio\": \"Hello, my name is Mohamed\",\r\n    \"password\": \"Pass@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/users/profile/692b220a349a8ae90fe67836",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "profile",
+                "692b220a349a8ae90fe67836"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Users Count",
+          "id": "366b9a30-b2f8-48e9-9dcd-bb718e361908",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQzNTcyMSwiZXhwIjoxNzY1MDQwNTIxfQ.ogTostxC2r_1n6bTkwxTSmmBDk6D0aqrp_38gLVduUY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/users/count",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "count"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Profile Photo Upload",
+          "id": "9466cf51-8417-4755-a8d8-c3fab93b5127",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQzNTcyMSwiZXhwIjoxNzY1MDQwNTIxfQ.ogTostxC2r_1n6bTkwxTSmmBDk6D0aqrp_38gLVduUY",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/C:/Users/pc/OneDrive/Pictures/1311871.jpeg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/users/profile/profile-photo-upload",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "profile",
+                "profile-photo-upload"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Profile",
+          "id": "81313530-b4c3-4f64-a060-4821cdd149a3",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyYzIxODQxZGU0OTUxYmU1ZTgwNiIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3NjQ0MzcwODYsImV4cCI6MTc2NTA0MTg4Nn0.Nu0bOx59V1OBVR-XLXffDjAXKILsYXVvuIRclPqWm3c",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/users/profile/692b2c21841de4951be5e806",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "profile",
+                "692b2c21841de4951be5e806"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Profile by Id",
+          "id": "85862f35-9eed-4bde-9d5b-fd40cf973902",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQzNTcyMSwiZXhwIjoxNzY1MDQwNTIxfQ.ogTostxC2r_1n6bTkwxTSmmBDk6D0aqrp_38gLVduUY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/users/profile/692b220a349a8ae90fe67836",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "profile",
+                "692b220a349a8ae90fe67836"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "15045ca8-62f3-40c7-b084-2ccf26c12620"
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "Create New Post",
+          "id": "0a8b5856-3f31-4da0-8d31-9fa5f1216b98",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQzNTcyMSwiZXhwIjoxNzY1MDQwNTIxfQ.ogTostxC2r_1n6bTkwxTSmmBDk6D0aqrp_38gLVduUY",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/C:/Users/pc/OneDrive/Pictures/profile.jpg"
+                },
+                {
+                  "key": "title",
+                  "value": "Kaftan",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "About The traditional moroccan Kaftan",
+                  "type": "text"
+                },
+                {
+                  "key": "categoryId",
+                  "value": "692c0dbf5587f8a4ef567f9f",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/posts",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Posts",
+          "id": "18c620e2-a26c-40f7-8270-85623dfdb588",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/posts",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Post",
+          "id": "91cb2992-9dba-4179-a60a-ba9176f331d5",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/posts/692c107c6d214573fa35a0eb",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "posts",
+                "692c107c6d214573fa35a0eb"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Posts Count",
+          "id": "41e9badf-6bd8-4961-999e-2d72be19f979",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/posts/count",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "posts",
+                "count"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Post",
+          "id": "f0fafd4b-09e1-4927-93a0-3f890542c7d9",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQ5NDY2NSwiZXhwIjoxNzY1MDk5NDY1fQ.cN6J-uIjec4jMSPopFgFAwW2-3XuDkLtLDfNjQhzh1k",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/posts/692c10d010b5de6246d3855e",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "posts",
+                "692c10d010b5de6246d3855e"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Post",
+          "id": "2edc2379-d9a3-4eb8-9afb-b5edc8315d4d",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQ5NDY2NSwiZXhwIjoxNzY1MDk5NDY1fQ.cN6J-uIjec4jMSPopFgFAwW2-3XuDkLtLDfNjQhzh1k",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"AI Models\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/posts/692c1031b645f010ba6886da",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "posts",
+                "692c1031b645f010ba6886da"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Post Image",
+          "id": "9791dd7f-c55f-4634-bc6a-f10ab9106895",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQ5NDY2NSwiZXhwIjoxNzY1MDk5NDY1fQ.cN6J-uIjec4jMSPopFgFAwW2-3XuDkLtLDfNjQhzh1k",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/C:/Users/pc/OneDrive/Pictures/1311871.jpeg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/posts/update-image/692c107c6d214573fa35a0eb",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "posts",
+                "update-image",
+                "692c107c6d214573fa35a0eb"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Toggle Like",
+          "id": "b42dab00-16ed-409d-8e52-5fa08c1a23e1",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjJiMzQ5YThhZTkwZmU2NzgzYyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3NjQ0OTY3NjgsImV4cCI6MTc2NTEwMTU2OH0.5eihDz1-WftjXUSKgpSgyNaXnSNXdXTCERDkl0AGMbU",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/posts/like/692c107c6d214573fa35a0eb",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "posts",
+                "like",
+                "692c107c6d214573fa35a0eb"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "f41de4b5-7a1d-4180-9df4-a555af9b4713"
+    },
+    {
+      "name": "Comments",
+      "item": [
+        {
+          "name": "Create New Comment",
+          "id": "b1e7747a-2eb1-4490-b9ab-e05d26c64b5c",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjJiMzQ5YThhZTkwZmU2NzgzYyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3NjQ0OTY3NjgsImV4cCI6MTc2NTEwMTU2OH0.5eihDz1-WftjXUSKgpSgyNaXnSNXdXTCERDkl0AGMbU",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"postId\": \"692c107c6d214573fa35a0eb\",\r\n    \"text\": \"I don't agree\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/comments",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "comments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Comments",
+          "id": "8011007d-4dd2-48d6-857e-8fcdf0ac8e76",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQ5NzI0NSwiZXhwIjoxNzY1MTAyMDQ1fQ.K-7PxDirXLW0H7tV4Rh1jl8j0QYLXNLp5mWcPVP9GKI",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/comments",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "comments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Comment",
+          "id": "41fcb389-a550-4fbc-8597-938a29d33b3f",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjJiMzQ5YThhZTkwZmU2NzgzYyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3NjQ0OTY3NjgsImV4cCI6MTc2NTEwMTU2OH0.5eihDz1-WftjXUSKgpSgyNaXnSNXdXTCERDkl0AGMbU",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/comments/692c1722339c6149cd27414a",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "comments",
+                "692c1722339c6149cd27414a"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Comment",
+          "id": "bffd7f88-d6e8-4c61-8b08-042e1fd46ee4",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjJiMzQ5YThhZTkwZmU2NzgzYyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3NjQ0OTY3NjgsImV4cCI6MTc2NTEwMTU2OH0.5eihDz1-WftjXUSKgpSgyNaXnSNXdXTCERDkl0AGMbU",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"text\": \"Great job\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/comments/692c1722339c6149cd27414a",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "comments",
+                "692c1722339c6149cd27414a"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "5b6653b6-3143-434e-8022-c6f8c56f8166"
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Create New Category",
+          "id": "3d7652a7-d383-48cd-ba32-32adceb9256b",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQ5NDY2NSwiZXhwIjoxNzY1MDk5NDY1fQ.cN6J-uIjec4jMSPopFgFAwW2-3XuDkLtLDfNjQhzh1k",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"sports\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/categories",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Categories",
+          "id": "b9ca252e-7a38-4a2f-86b7-b890a4043649",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/categories",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Category",
+          "id": "bf19af99-9c2d-4f17-a8c4-86a0a948bc09",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQ5NDY2NSwiZXhwIjoxNzY1MDk5NDY1fQ.cN6J-uIjec4jMSPopFgFAwW2-3XuDkLtLDfNjQhzh1k",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/categories/692c0de85587f8a4ef567fb1",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "692c0de85587f8a4ef567fb1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "97a1d8b4-9a9c-4df5-b70e-9f396c6d5473"
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Get Info",
+          "id": "50ef1387-a66f-41bd-8e3b-ee17d9328da0",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MmIyMjBhMzQ5YThhZTkwZmU2NzgzNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTc2NDQzNTcyMSwiZXhwIjoxNzY1MDQwNTIxfQ.ogTostxC2r_1n6bTkwxTSmmBDk6D0aqrp_38gLVduUY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{DOMAIN}}/api/v1/admin/info",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "info"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "e0e1ce8f-882d-4d66-95e7-9d19b2134545"
+    }
+  ]
+}

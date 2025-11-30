@@ -1,13 +1,13 @@
-import { Request, Response } from "express";
-import asyncHandler from "express-async-handler";
-import Post from "../models/Post.js";
-import User from "../models/User.js";
-import Category from "../models/Category.js";
-import Comment from "../models/Comment.js";
+import { Request, Response } from 'express';
+import asyncHandler from 'express-async-handler';
+import Post from '../models/Post.js';
+import User from '../models/User.js';
+import Category from '../models/Category.js';
+import Comment from '../models/Comment.js';
 
 /**
  * @desc   Get All Info
- * @route  api/admin/info
+ * @route  api/v1/admin/info
  * @method GET
  * @access private(admin)
  */

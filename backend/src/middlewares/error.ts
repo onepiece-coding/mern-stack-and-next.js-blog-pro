@@ -11,7 +11,12 @@ export const notFound = (
   next(error);
 };
 
-export const errorHandler = (err: any, _req: Request, res: Response, _next: NextFunction) => {
+export const errorHandler = (
+  err: any,
+  _req: Request,
+  res: Response,
+  _next: NextFunction,
+) => {
   const status = err.statusCode ?? 500;
   const response: Record<string, any> = { message: err.message };
   if (err.errors) response.errors = err.errors; // <-- include zod details

@@ -1,14 +1,13 @@
-import { Router } from "express";
-import adminRoutes from "./adminRoute.js";
-import authRoutes from "./authRoute.js";
-import categoriesRoutes from "./categoriesRoute.js";
-import commentsRoutes from "./commentsRoute.js";
-import paswordRoutes from "./passwordRoute.js";
-import postsRoutes from "./postsRoute.js";
-import usersRoutes from "./usersRoute.js";
-import passwordRoutes from "./passwordRoute.js";
+import { Router } from 'express';
+import adminRoutes from './adminRoute.js';
+import authRoutes from './authRoute.js';
+import categoriesRoutes from './categoriesRoute.js';
+import commentsRoutes from './commentsRoute.js';
+import postsRoutes from './postsRoute.js';
+import usersRoutes from './usersRoute.js';
+import passwordRoutes from './passwordRoute.js';
 
-const rootRouter:Router = Router();
+const rootRouter: Router = Router();
 
 rootRouter.use('/admin', adminRoutes);
 rootRouter.use('/auth', authRoutes);

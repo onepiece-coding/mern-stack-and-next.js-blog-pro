@@ -1,5 +1,4 @@
-import { Schema, model, Document } from "mongoose";
-import { sign } from "jsonwebtoken";
+import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 export interface IImage {
@@ -45,7 +44,7 @@ const UserSchema = new Schema<IUser>(
     profilePhoto: {
       type: Object,
       default: {
-        url: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png",
+        url: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
         publicId: null,
       },
     },
@@ -65,14 +64,14 @@ const UserSchema = new Schema<IUser>(
     timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  }
+  },
 );
 
 // Populate Posts That Belong To This User Whe He/She Gets His/Her Profile
-UserSchema.virtual("posts", {
-  ref: "Post",
-  foreignField: "user",
-  localField: "_id",
+UserSchema.virtual('posts', {
+  ref: 'Post',
+  foreignField: 'user',
+  localField: '_id',
 });
 
 // Hash password before save
