@@ -98,7 +98,7 @@ export const getAllPostsCtrl = asyncHandler(
         title: new RegExp(`^${category}$`, 'i'),
       });
       if (!cat) res.status(200).json({ posts: [], totalPages: 0 });
-      query.categoryId = cat._id;
+      query.categoryId = cat!._id;
     }
 
     const totalPosts = await Post.countDocuments(query);
@@ -172,7 +172,7 @@ export const deletePostCtrl = asyncHandler(
 
     if (req.user.isAdmin || req.user.id === post.user.toString()) {
       await Post.findByIdAndDelete(req.params.id);
-      await removeImage(post.image.publicId);
+      await removeImage(post.image.publicId!);
 
       await Comment.deleteMany({ postId: post._id });
 

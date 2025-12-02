@@ -16,30 +16,32 @@ process.on('unhandledRejection', (err: unknown) => {
 
 const PORT = env.PORT ?? 8000;
 
-try {
-  await connectToDB(env.MONGO_URI);
-} catch (err) {
-  logger.error('Failed to connect to DB at startup', err);
-  process.exit(1);
-}
+if(env.NODE_ENV !== "test"){
+  try {
+    await connectToDB(env.MONGO_URI);
+  } catch (err) {
+    logger.error('Failed to connect to DB at startup', err);
+    process.exit(1);
+  }
 
-const server = app.listen(PORT, () => {
-  logger.info(`Server running in ${env.NODE_ENV} mode on port ${PORT}`);
-});
-
-// Graceful shutdown handlers
-for (const sig of ['SIGINT', 'SIGTERM'] as const) {
-  process.on(sig, async () => {
-    logger.info(`${sig} received, shutting down gracefully…`);
-    server.close(async (err?: Error) => {
-      if (err) logger.error('Error closing HTTP server', err);
-      try {
-        await mongoose.disconnect();
-        logger.info('MongoDB connection closed');
-      } catch (dbErr) {
-        logger.error('Error disconnecting MongoDB', dbErr);
-      }
-      process.exit(0);
-    });
+  const server = app.listen(PORT, () => {
+    logger.info(`Server running in ${env.NODE_ENV} mode on port ${PORT}`);
   });
+
+  // Graceful shutdown handlers
+  for (const sig of ['SIGINT', 'SIGTERM'] as const) {
+    process.on(sig, async () => {
+      logger.info(`${sig} received, shutting down gracefully…`);
+      server.close(async (err?: Error) => {
+        if (err) logger.error('Error closing HTTP server', err);
+        try {
+          await mongoose.disconnect();
+          logger.info('MongoDB connection closed');
+        } catch (dbErr) {
+          logger.error('Error disconnecting MongoDB', dbErr);
+        }
+        process.exit(0);
+      });
+    });
+  }
 }

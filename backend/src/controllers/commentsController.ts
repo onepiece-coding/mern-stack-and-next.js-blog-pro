@@ -25,7 +25,7 @@ export const createCommentCtrl = asyncHandler(
       postId: req.body.postId,
       text: req.body.text,
       user: req.user.id,
-      username: profile.username,
+      username: profile!.username,
     });
 
     res.status(201).json(comment);

@@ -173,13 +173,13 @@ export const profilePhotoUploadCtrl = asyncHandler(
 
     const user = await User.findById(req.user.id);
 
-    if (user.profilePhoto.publicId !== null) {
-      await removeImage(user.profilePhoto.publicId);
+    if (user!.profilePhoto.publicId !== null) {
+      await removeImage(user!.profilePhoto.publicId);
     }
 
-    user.profilePhoto = profilePhoto;
+    user!.profilePhoto = profilePhoto;
 
-    await user.save();
+    await user!.save();
 
     res.status(200).json({
       message: 'your profile photo uploaded successfully',
@@ -202,7 +202,7 @@ export const deleteUserProfileCtrl = asyncHandler(
     }
 
     const posts = await Post.find({ user: user._id });
-    const publicIds = posts?.map((post) => post.image.publicId);
+    const publicIds: string[] = posts?.map((post) => post.image.publicId) as string[];
     if (publicIds?.length > 0) {
       await removeMultipleImages(publicIds);
     }
