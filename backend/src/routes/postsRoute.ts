@@ -10,7 +10,7 @@ import {
   toggleLikeCtrl,
 } from '../controllers/postsController.js';
 import { singleImage } from '../middlewares/photoUpload.js';
-import { verifyToken } from '../middlewares/verifyToken.js';
+import { verifyToken, verifyTokenAndAdmin } from '../middlewares/verifyToken.js';
 import validateObjectIdParam from '../middlewares/validateObjectId.js';
 import { validate } from '../middlewares/validate.js';
 import {
@@ -32,7 +32,7 @@ postsRoutes
   .get(getAllPostsCtrl);
 
 // /api/v1/post/count
-postsRoutes.route('/count').get(getPostCountCtrl);
+postsRoutes.route('/count').get(verifyTokenAndAdmin, getPostCountCtrl);
 
 // /api/v1/post/:id
 postsRoutes

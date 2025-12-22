@@ -97,7 +97,10 @@ export const getAllPostsCtrl = asyncHandler(
       const cat = await Category.findOne({
         title: new RegExp(`^${category}$`, 'i'),
       });
-      if (!cat) res.status(200).json({ posts: [], totalPages: 0 });
+      if (!cat) {
+        res.status(200).json({ posts: [], totalPages: 0 });
+        return;
+      } 
       query.categoryId = cat!._id;
     }
 
@@ -171,10 +174,10 @@ export const deletePostCtrl = asyncHandler(
     }
 
     if (req.user.isAdmin || req.user.id === post.user.toString()) {
-      await Post.findByIdAndDelete(req.params.id);
-      await removeImage(post.image.publicId!);
-
+      if (post.image.publicId !== null) await removeImage(post.image.publicId!);
       await Comment.deleteMany({ postId: post._id });
+      await Post.findByIdAndDelete(req.params.id);
+
 
       res.status(200).json({
         message: 'post has been deleted successsfully',

@@ -120,6 +120,7 @@ export const loginUserCtrl = asyncHandler(
         message:
           'We sent a verification link to your email, please verify your email address',
       });
+      return;
     }
 
     const token = jwt.sign(

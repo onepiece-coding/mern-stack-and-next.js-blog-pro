@@ -8,6 +8,6 @@
     "isolatedModules": true,
     "types": ["node", "jest"]
   },
-  "include": ["src", "test", "tests", "__tests__"],
+  "include": ["src", "tests", "__tests__"],
   "exclude": ["node_modules", "dist"]
 }

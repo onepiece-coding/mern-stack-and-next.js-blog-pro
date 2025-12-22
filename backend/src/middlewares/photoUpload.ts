@@ -1,7 +1,7 @@
 import multer, { FileFilterCallback } from 'multer';
 import type { Request } from 'express';
 
-const imageFileFilter = (
+export const imageFileFilter = (
   req: Request,
   file: Express.Multer.File,
   cb: FileFilterCallback,
@@ -15,7 +15,7 @@ const imageFileFilter = (
 };
 
 // Limit files to 1MB by default
-const DEFAULT_LIMITS = { fileSize: 1 * 1024 * 1024 };
+export const DEFAULT_LIMITS = { fileSize: 1 * 1024 * 1024 };
 
 export const photoUpload = multer({
   storage: multer.memoryStorage(),

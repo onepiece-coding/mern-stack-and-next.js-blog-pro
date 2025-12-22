@@ -51,8 +51,6 @@ app.use(
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser(env.COOKIE_SECRET ?? undefined));
 
-// Prevent XSS(Cross Site Scripting) Attacks
-
 // Routes
 app.use('/api/v1', rootRouter);
 

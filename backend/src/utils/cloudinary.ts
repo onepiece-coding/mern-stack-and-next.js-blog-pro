@@ -1,9 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  v2 as cloudinary,
-  UploadApiResponse,
-  UploadApiErrorResponse,
-} from 'cloudinary';
+import { v2 as cloudinary, UploadApiResponse, UploadApiErrorResponse } from 'cloudinary';
 import streamifier from 'streamifier';
 import { env } from '../env.js';
 
@@ -13,27 +8,23 @@ cloudinary.config({
   api_secret: env.CLOUDINARY_API_SECRET,
 });
 
+
 export const uploadBufferToCloudinary = async (
   buffer: Buffer,
   options?: { folder?: string; public_id?: string },
+  cloudinaryClient = cloudinary,
+  uploaderFactory: (opts: any, cb: (err?: UploadApiErrorResponse, res?: UploadApiResponse) => void) => NodeJS.WritableStream = cloudinaryClient.uploader.upload_stream.bind(cloudinaryClient.uploader),
 ): Promise<UploadApiResponse> => {
   return new Promise<UploadApiResponse>((resolve, reject) => {
-    const uploadStream = cloudinary.uploader.upload_stream(
+    const uploadStream = uploaderFactory(
       {
         folder: options?.folder,
         public_id: options?.public_id,
         resource_type: 'auto',
       },
-      (
-        error: UploadApiErrorResponse | undefined,
-        result: UploadApiResponse | undefined,
-      ) => {
-        if (error) {
-          return reject(error);
-        }
-        if (!result) {
-          return reject(new Error('Empty response from Cloudinary'));
-        }
+      (error: UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) => {
+        if (error) return reject(error);
+        if (!result) return reject(new Error('Empty response from Cloudinary'));
         resolve(result);
       },
     );
@@ -42,19 +33,21 @@ export const uploadBufferToCloudinary = async (
   });
 };
 
-export const removeImage = async (publicId: string) => {
+export const removeImage = async (publicId: string, client = cloudinary) => {
   try {
-    const result = await cloudinary.uploader.destroy(publicId);
+    const result = await client.uploader.destroy(publicId);
     return result;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
     throw new Error('Internal Server Error (cloudinary removeImage)');
   }
 };
 
-export const removeMultipleImages = async (publicIds: string[]) => {
+export const removeMultipleImages = async (publicIds: string[], client = cloudinary) => {
   try {
-    const result = await cloudinary.api.delete_resources(publicIds);
+    const result = await client.api.delete_resources(publicIds);
     return result;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
     throw new Error('Internal Server Error (cloudinary removeMultipleImages)');
   }

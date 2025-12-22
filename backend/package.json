@@ -16,9 +16,9 @@
     "test:unit:watch": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --config=jest.unit.config.cjs --watch",
     "test:integration": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --config=jest.integration.config.cjs --runInBand",
     "test:integration:watch": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --config=jest.integration.config.cjs --watch",
-    "test:all": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --config=jest.config.cjs --coverage --runInBand",
-    "test": "npm run test:unit",
-    "test:cov": "npm run test:all"
+    "test:cov": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --config=jest.config.cjs --coverage --runInBand",
+    "test": "npm run test:unit && npm run test:integration",
+    "coverage": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --config=jest.coverage.config.cjs --runInBand --coverage"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -36,6 +36,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.12.0",
     "multer": "^1.4.5-lts.1",
+    "node-mocks-http": "^1.17.2",
     "nodemailer": "^7.0.10",
     "streamifier": "^0.1.1",
     "tslib": "^2.8.1",

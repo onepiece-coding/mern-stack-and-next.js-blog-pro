@@ -1,6 +1,6 @@
-# Blog Pro 📝
+# OP-Blog 📝
 
-**Blog Pro** is a full-stack blogging platform built with **Next.js** (frontend) and **Node.js + Express.js** (backend).  
+**OP-Blog** is a full-stack blogging platform built with **Next.js** (frontend) and **Node.js + Express.js** (backend).  
 It supports features like authentication, post management, admin dashboard, category creation, and more!
 
 ---
@@ -26,8 +26,8 @@ It supports features like authentication, post management, admin dashboard, cate
 ### 1. Clone the Repository
 
 ```bash
-  git clone https://github.com/onepiece-coding/mern-stack-and-next.js-blog-pro.git
-  cd mern-stack-and-next.js-blog-pro
+  git clone https://github.com/onepiece-coding/OP-Blog.git
+  cd OP-Blog
 ```
 
 ### 2. Install Dependencies

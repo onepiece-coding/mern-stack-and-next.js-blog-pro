@@ -28,7 +28,7 @@ const getCategoriesQuerySchema = z.object({
 export const createCategoryCtrl = asyncHandler(
   async (req: Request, res: Response) => {
     let cat = await Category.findOne({
-      name: { $regex: `^${req.body.title}$`, $options: 'i' },
+      title: { $regex: `^${req.body.title}$`, $options: 'i' },
     });
     if (cat) throw createError(409, 'Category already exist');
 

@@ -1,8 +1,4 @@
-import nodemailer, {
-  Transporter,
-  SendMailOptions,
-  SentMessageInfo,
-} from 'nodemailer';
+import nodemailer, { Transporter, SendMailOptions, SentMessageInfo } from 'nodemailer';
 import { env } from '../env.js';
 import logger from './logger.js';
 
@@ -19,7 +15,6 @@ async function getTransporter(): Promise<Transporter> {
   if (transporterPromise) return transporterPromise;
 
   transporterPromise = (async (): Promise<Transporter> => {
-    // Test environment: use ethereal (no real email sent)
     if (env.NODE_ENV === 'test') {
       const testAccount = await nodemailer.createTestAccount();
       const tx = nodemailer.createTransport({
@@ -34,7 +29,6 @@ async function getTransporter(): Promise<Transporter> {
       return tx;
     }
 
-    // Fallback: username/password (APP_EMAIL_PASSWORD must be an app password for Gmail)
     if (!env.APP_EMAIL_ADDRESS || !process.env.APP_EMAIL_PASSWORD) {
       throw new Error(
         'Email is not configured: set APP_EMAIL_ADDRESS and APP_EMAIL_PASSWORD',
@@ -55,17 +49,11 @@ async function getTransporter(): Promise<Transporter> {
   return transporterPromise;
 }
 
-/**
- * Send an email. Returns SentMessageInfo for real transports,
- * and (in test mode) returns the preview URL string so tests can assert on it.
- */
-export async function sendEmail({
-  to,
-  subject,
-  html,
-  from,
-}: EmailPayload): Promise<SentMessageInfo | string> {
-  const transporter = await getTransporter();
+export async function sendEmail(
+  { to, subject, html, from }: EmailPayload,
+  transporterOverride?: Transporter,
+): Promise<SentMessageInfo | string> {
+  const transporter = transporterOverride ?? (await getTransporter());
 
   const mailOptions: SendMailOptions = {
     from: from ?? env.APP_EMAIL_ADDRESS,
@@ -77,9 +65,7 @@ export async function sendEmail({
   try {
     const info = (await transporter.sendMail(mailOptions)) as SentMessageInfo;
 
-    // Return preview URL for assertions
     if (env.NODE_ENV === 'test') {
-      // For test assertions.
       const preview = nodemailer.getTestMessageUrl(info);
       return preview ?? info;
     }
